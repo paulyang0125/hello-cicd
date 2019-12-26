@@ -14,7 +14,7 @@ jobs: # a collection of steps
       - restore_cache: # special step to restore the dependency cache
           name: Restore dependencies from cache
           key: dependency-cache-{{ checksum "package-lock.json" }}
-	  - run:
+      - run:
           name: install-npm-wee
           command: npm install
       - save_cache: # special step to save the dependency cache
@@ -24,6 +24,6 @@ jobs: # a collection of steps
       - run: # run tests
           name: test
           command: npm test
-	  - run: # run coverage report
+      - run: # run coverage report
           name: code-coverage
           command: './node_modules/.bin/nyc report --reporter=text-lcov'
