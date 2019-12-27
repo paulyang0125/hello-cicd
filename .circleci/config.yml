@@ -32,7 +32,7 @@ jobs:
       - deploy:
           name: Deploy To ENV Staging
           #command: sudo eb deploy docker-ci-test-dev # deploy (Deploy to eb)
-		  command: eb deploy --profile default
+          command: eb deploy --profile default
 workflows: 
   version: 2 
   docker-cicd: 
