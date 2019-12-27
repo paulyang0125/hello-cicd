@@ -25,5 +25,24 @@ jobs: # a collection of steps
           name: test
           command: npm test
       - run:
-          name: deploy 
-          command: bash deploy.sh
+          name: Install EB Command Line
+          command: >
+            sudo apt-get update &&
+            sudo apt-get install -y python python-dev python-pip python-virtualenv &&
+            sudo rm -rf /var/lib/apt/lists/* &&
+            sudo pip install awsebcli &&
+            sudo pip install --upgrade --user awsebcli
+             sudo pip install --upgrade --user awsebcli
+      - run:
+          name: Setup EB Credentials
+          command: >
+            mkdir -p ~/.aws &&
+            echo [default] >> ~/.aws/credentials &&
+            echo aws_access_key_id = $AWS_ACCESS_KEY_ID >> ~/.aws/credentials &&
+            echo aws_secret_access_key = $AWS_SECRET_ACCESS_KEY >> ~/.aws/credentials
+      - deploy:
+          name: Deploy To ENV Staging
+          command: >
+            eb use env-dev --profile default
+            eb deploy --profile default
+      
